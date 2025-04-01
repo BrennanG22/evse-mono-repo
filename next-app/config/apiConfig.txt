@@ -1,0 +1,70 @@
+[
+  {
+    "apiName": "Test",
+    "apiDescription": "Description of Test API",
+    "endpoint": "http://localhost:2000/testCan",
+    "method": "GET"
+  },
+  {
+    "apiName": "/chargeState",
+    "apiDescription": "Returns if the EVSE is charging",
+    "endpoint": "http://localhost:2000/api/chargeState",
+    "method": "GET"
+  },
+  {
+    "apiName": "/batteryCapacity",
+    "apiDescription": "Returns battery capacity of connected EV",
+    "endpoint": "http://localhost:2000/api/batteryCapacity",
+    "method": "GET"
+  },
+  {
+    "apiName": "/soc",
+    "apiDescription": "Returns the state of charge of connected EV",
+    "endpoint": "http://localhost:2000/api/soc",
+    "method": "GET"
+  },
+  {
+    "apiName": "/voltage",
+    "apiDescription": "Returns the output voltage of the EVSE",
+    "endpoint": "http://localhost:2000/api/voltage",
+    "method": "GET"
+  },
+  {
+    "apiName": "/current",
+    "apiDescription": "Returns the output current of the EVSE",
+    "endpoint": "http://localhost:2000/api/current",
+    "method": "GET"
+  },
+  {
+    "apiName": "/setAuth",
+    "apiDescription": "Sets auth state of EVSE",
+    "endpoint": "http://localhost:2000/api/setAuth",
+    "apiParameters": "authState: Boolean",
+    "method": "POST"
+  },
+  {
+    "apiName": "/setPowerLimit",
+    "apiDescription": "Sets the power limit of the EVSE",
+    "endpoint": "http://localhost:2000/api/setPowerLimit",
+    "apiParameters": "number",
+    "method": "POST"   
+  },
+  {
+    "apiName": "/can1",
+    "apiDescription": "Get CAN value",
+    "endpoint": "http://localhost:2000/proxy/api/system/can/can1",
+    "method": "GET"
+  },
+  {
+    "apiName": "/can1",
+    "apiDescription": "Start CAN recording",
+    "endpoint": "http://localhost:2000/proxy/api/system/can/can1",
+    "method": "POST"
+  },
+  {
+    "apiName": "/can1",
+    "apiDescription": "Stop CAN recording",
+    "endpoint": "http://localhost:2000/proxy/api/system/can/can1",
+    "method": "DELETE"
+  }
+]

@@ -1,0 +1,2 @@
+{"level":30,"time":1743536425038,"pid":2548,"hostname":"DESKTOP-IM51DSP","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
+{"level":30,"time":1743536425064,"pid":2548,"hostname":"DESKTOP-IM51DSP","msg":"Modbus server listening on port 2000"}
