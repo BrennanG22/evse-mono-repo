@@ -13,7 +13,8 @@
   },
   "type": "module",
 "scripts": {
-  "build": "tsc && xcopy src\\.env out\\.env /Y"
+  "build": "tsc && xcopy src\\.env out\\.env /Y",
+  "start": "tsc && xcopy src\\.env out\\.env /Y && node ./out/nodeServer.js"
 }
 
 }

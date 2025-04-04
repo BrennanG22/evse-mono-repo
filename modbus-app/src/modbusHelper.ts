@@ -1,4 +1,3 @@
-import { clear } from "console";
 import ModbusRTU from "modbus-serial";
 
 
