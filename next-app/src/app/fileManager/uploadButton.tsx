@@ -17,7 +17,7 @@ export default function UploadButton() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch("/api/upload", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_MODBUS_SERVER}/service/uploadFile`, {
       method: "POST",
       body: formData,
     });
@@ -30,9 +30,22 @@ export default function UploadButton() {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={!file}>Upload</button>
+    <div className="flex flex-col items-center space-y-4">
+      <input
+        type="file"
+        onChange={handleFileChange}
+        className="border-2 border-gray-300 p-2 rounded-lg w-64 text-gray-700"
+      />
+      <button
+        onClick={handleUpload}
+        disabled={!file}
+        className={`${
+          !file ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+        } text-white py-2 px-6 rounded-lg transition-all duration-300`}
+      >
+        Upload
+      </button>
     </div>
   );
+  
 }

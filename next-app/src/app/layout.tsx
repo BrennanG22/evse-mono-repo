@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="sticky top-1">
+        <div className="sticky top-0">
           <Banner />
         </div>
         {children}

@@ -260,7 +260,7 @@ const RuleTable = () => {
         </button>
       </div>
       <div className="bg-black h-1 w-full"></div>
-      <div className="overflow-y-auto flex-1">{rulesDisplay}</div>
+      <div className="h-full overflow-y-auto flex-1">{rulesDisplay}</div>
     </div>
   )
 }

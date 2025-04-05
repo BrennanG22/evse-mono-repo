@@ -1,11 +1,14 @@
-import UploadButton from "./uploadButton";
+import readConfig from "@/globalComponents/configManager";
+import FileTable from "./fileTable";
 
-function fileManager(){
-  return(
-    <>
-      <UploadButton></UploadButton>
-    </>
+async function fileManager() {
+
+  return (
+    <div className="m-10">
+      <FileTable config={await readConfig() || new Map()}/>
+    </div>
   )
 }
+
 
 export default fileManager;

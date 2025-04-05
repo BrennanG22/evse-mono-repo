@@ -1,4 +1,9 @@
-{"level":30,"time":1743608338090,"pid":24612,"hostname":"DESKTOP-IM51DSP","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
-{"level":30,"time":1743608338116,"pid":24612,"hostname":"DESKTOP-IM51DSP","msg":"Modbus server listening on port 2000"}
-{"level":30,"time":1743608348822,"pid":24612,"hostname":"DESKTOP-IM51DSP","msg":"WebSocket error, retrying (1/2)"}
-{"level":30,"time":1743608349838,"pid":24612,"hostname":"DESKTOP-IM51DSP","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
+{"level":30,"time":1743798241856,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
+{"level":30,"time":1743798241904,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"Modbus server listening on port 2000"}
+{"level":30,"time":1743798246639,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"Here"}
+{"level":30,"time":1743798252450,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"WebSocket error, retrying (1/2)"}
+{"level":30,"time":1743798253455,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
+{"level":30,"time":1743798264030,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"WebSocket error, retrying (2/2)"}
+{"level":50,"time":1743798265037,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"WebSocket failed after 2 retries"}
+{"level":30,"time":1743798320782,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"Here"}
+{"level":30,"time":1743798699765,"pid":424,"hostname":"LAPTOP-6J25PHEJ","msg":"Here"}
