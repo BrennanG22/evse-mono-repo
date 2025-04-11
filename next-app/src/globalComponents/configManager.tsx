@@ -1,9 +1,9 @@
 import path from "path";
 import * as fs from 'fs';
 
-// Define a type for the structure of your JSON
+
 interface ConfigData {
-  [key: string]: string; // Assuming the JSON is a flat map with string keys and string values
+  [key: string]: string; 
 }
 
 export async function readConfig(): Promise<Map<string, string> | null> {
@@ -15,7 +15,6 @@ export async function readConfig(): Promise<Map<string, string> | null> {
     const fileOutput = fs.readFileSync(filePath, 'utf-8');
     const parsedData: ConfigData = JSON.parse(fileOutput);
 
-    // Convert parsedData to a Map
     const dataMap = new Map<string, string>(Object.entries(parsedData));
 
     return dataMap;

@@ -1,10 +1,13 @@
 import logger from "./logger.js";
+import { WebSocket } from "ws";
+
+const MAX_RETRY: number = 2;
 
 export default class webSocketHelper {
   private socketURL: string;
   private messages: string[] = [];
   private onMessageCallback: () => void;
-  private tryingConnection: boolean;
+  private tryingConnectionLock: boolean = false;
 
   socket: WebSocket;
 
@@ -13,24 +16,25 @@ export default class webSocketHelper {
       this.onMessageCallback = callBack;
     }
     this.socketURL = url;
-    this.startSocket().catch(() => {});
+    this.startSocket().catch(() => { });
   };
 
   async startSocket(): Promise<void> {
-    this.tryingConnection = true;
+    this.tryingConnectionLock = true;
     return new Promise((resolve, reject) => {
       const attemptConnection = (retryCount: number) => {
-        if (retryCount >= 2) {
-          logger.error("WebSocket failed after 2 retries");
-          this.tryingConnection = false;
+        if (retryCount >= MAX_RETRY) {
+          logger.error(`WebSocket failed after ${MAX_RETRY} retries`);
+          this.tryingConnectionLock = false;
           return reject("Websocket failed to connect");
         }
+
         logger.info(`Trying WebSocket Connection at: ${this.socketURL}`);
         this.socket = new WebSocket(this.socketURL);
 
         this.socket.onopen = () => {
           logger.info("WebSocket Connected");
-          this.tryingConnection = false;
+          this.tryingConnectionLock = false;
           resolve();
         };
 
@@ -42,13 +46,12 @@ export default class webSocketHelper {
         };
 
         this.socket.onerror = () => {
-          logger.info(`WebSocket error, retrying (${retryCount + 1}/2)`);
-          setTimeout(() => attemptConnection(retryCount + 1), 1000); // Wait 1 sec before retrying
+            logger.info(`WebSocket error, retrying (${retryCount + 1}/${MAX_RETRY})`);
+            setTimeout(() => attemptConnection(retryCount + 1), 1000);
         };
 
         this.socket.onclose = () => {
-          logger.info("WebSocket closed unexpectedly, retrying...");
-          setTimeout(() => attemptConnection(retryCount + 1), 1000);
+            logger.info(`WebSocket closed unexpectedly`);
         };
       };
 
@@ -57,12 +60,12 @@ export default class webSocketHelper {
   }
 
   async ensureSocketOpen(): Promise<void> {
-    if (this.socket.readyState !== WebSocket.OPEN && !this.tryingConnection) {
+    if (this.socket.readyState !== WebSocket.OPEN && !this.tryingConnectionLock) {
       await this.startSocket()
-      .then(() => {return Promise.resolve()})
-      .catch(() => {return Promise.reject()})
+        .then(() => { return Promise.resolve() })
+        .catch(() => { return Promise.reject() })
     }
-    else if(this.tryingConnection){
+    else if (this.tryingConnectionLock) {
       logger.info("Connection refused due to socket actively connecting")
       return Promise.reject("Server is attempting to connect to WebSocket, please wait");
     }

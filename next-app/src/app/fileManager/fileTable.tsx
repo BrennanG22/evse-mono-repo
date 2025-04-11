@@ -4,13 +4,11 @@ import { JSX, useState } from "react";
 import FileEntry from "./fileEntry";
 import UploadButton from "./uploadButton";
 
-interface fileTableProps{
-  config:Map<string, string>
-}
 
-function FileTable( {config}: fileTableProps ) {
+
+function FileTable() {
   const [fileList, setFileList] = useState<JSX.Element[]>([]);
-  getFiles(config.get("MODBUS_SERVER")??"").then((data) => setFileList(createFileEntryList(data)));
+  getFiles().then((data) => setFileList(createFileEntryList(data)));
 
   return (
     <div className="flex-col space-y-2">
@@ -19,7 +17,7 @@ function FileTable( {config}: fileTableProps ) {
     </div>);
 }
 
-async function getFiles(address: string) {
+async function getFiles() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_MODBUS_SERVER}/service/getFiles`);
   if (res.ok) {
     const data = await res.json()
