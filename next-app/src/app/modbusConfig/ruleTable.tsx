@@ -2,6 +2,7 @@
 
 import { JSX, useEffect, useState } from "react";
 import RuleBar from "./ruleBar";
+import { useConfig } from "@/globalComponents/config/configContext";
 
 export interface ruleData {
   id: number;
@@ -22,6 +23,8 @@ const RuleTable = () => {
   const [rules, setRules] = useState<ruleData[]>(() => {
     return typeof window !== "undefined" ? JSON.parse(localStorage.getItem("rules") || "[]") : []
   });
+
+  const config = useConfig();
 
   //Connection details
   const [ipAddress, setIpAddress] = useState<string>(() => { return typeof window !== "undefined" ? localStorage.getItem("ip") || "" : "" });
@@ -112,7 +115,7 @@ const RuleTable = () => {
         apiEndpoint: rule.apiEndpoint
       })
     });
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/modbus/setRules", {
+    fetch(config.MODBUS_SERVER + "/modbus/setRules", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -124,7 +127,7 @@ const RuleTable = () => {
   }
 
   function startConnection() {
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/modbus/getModbusConnection", {
+    fetch(config.MODBUS_SERVER + "/modbus/getModbusConnection", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -139,7 +142,7 @@ const RuleTable = () => {
   };
 
   function stopConnection() {
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/modbus/stopModbusConnection", {
+    fetch(config.MODBUS_SERVER + "/modbus/stopModbusConnection", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -154,7 +157,7 @@ const RuleTable = () => {
   }
 
   function getRulesFromSource() {
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/modbus/rules", {
+    fetch(config.MODBUS_SERVER + "/modbus/rules", {
       method: "GET"
     }).then((response) => {
       if (!response.ok) {
@@ -171,7 +174,7 @@ const RuleTable = () => {
   }
 
   function getStatus() {
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/modbus/getModbusStatus", {
+    fetch(config.MODBUS_SERVER + "/modbus/getModbusStatus", {
       method: "GET",
       signal: AbortSignal.timeout(500)
     })

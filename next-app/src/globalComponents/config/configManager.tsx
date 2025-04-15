@@ -8,7 +8,6 @@ interface ConfigData {
 
 export async function readConfig(): Promise<Map<string, string> | null> {
   console.assert(process.env.CONFIG_PATH, "Missing CONFIG_PATH");
-  console.log(process.env.CONFIG_PATH);
 
   try {
     const filePath = path.resolve(`${process.env.CONFIG_PATH}/env-next.json`);

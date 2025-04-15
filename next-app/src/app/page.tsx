@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import MonitorContainer from "./monitorContainer";
 import StatsBox from "./statsBox";
 import webSocketHelper from "./webSocketHelper";
+import { useConfig } from "@/globalComponents/config/configContext";
 
 const ParentComp = () => {
 
@@ -37,7 +38,7 @@ const ParentComp = () => {
     
   }
 
-
+  const config = useConfig();
   return (
     <div>
       <div className="w-full flex justify-center">
@@ -48,6 +49,7 @@ const ParentComp = () => {
           <StatsBox current={current} voltage={voltage} powerLimit={powerLimit} currentPower={currentPower} />
         </MonitorContainer>
       </div>
+      {config.API_CONFIG_PATH}
     </div>
   )
 }

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "child_process": "^1.0.2",
     "dotenv": "^16.4.7",
     "next": "^15.1.7",
     "react": "^19.0.0",

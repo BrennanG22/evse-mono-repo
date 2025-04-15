@@ -2,13 +2,14 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import logger from "../logger.js";
-import multer from "multer"
+import multer from "multer";
+import {spawn} from "child_process";
 const router = express.Router();
 
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'C:/Users/jbrgi/Code/evse-mono-repo/config'); 
+    cb(null, process.env.CONFIG_PATH??""); 
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -42,5 +43,23 @@ router.get('/getFiles', (req, res) => {
   const files: string[] = fs.readdirSync(process.env.CONFIG_PATH ?? "");
   res.send(JSON.stringify(files));
 });
+
+router.get('/resetConfigPath', (req, res) => {
+  const script = spawn(process.env.INIT_SCRIPT_PATH??"");
+  
+  script.stdout.on('data', (data) => {
+    logger.info(`stdout: ${data}`);
+  });
+  
+  script.stderr.on('data', (data) => {
+    logger.error(`stderr: ${data}`);
+  });
+  
+  script.on('close', (code) => {
+    logger.info(`Shell script exited with code ${code}`);
+  });
+
+  res.send();
+})
 
 export default router;

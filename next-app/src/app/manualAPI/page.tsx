@@ -1,8 +1,11 @@
+import { redirect } from "next/navigation";
 import APIContainer from "./apiContainer";
+import readConfig from "@/globalComponents/config/configManager";
 
 export const dynamic = "force-dynamic";
 
-function manualAPI() {
+async function manualAPI() {
+
   return (
     <div>
       <div className="m-10 ">

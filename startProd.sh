@@ -8,13 +8,6 @@ docker stop evse-app >/dev/null 2>&1 || true
 docker rm evse-app >/dev/null 2>&1 || true
 
 # Start new container with initialization control
-docker run -d \
-  --restart unless-stopped \
-  --name evse-app \
-  -p 3000:3000 \
-  -p 2000:2000 \
-  -v evse-data:/app/config \
-  -e RUN_INIT_SCRIPT=$RUN_INIT \
-  evse-app
+docker run -d --restart unless-stopped --name evse-app -p 3000:3000 -p 2000:2000 -v evse-data:/app/config -e RUN_INIT_SCRIPT=$RUN_INIT evse-app
 
 echo "EVSE container started with RUN_INIT_SCRIPT=$RUN_C

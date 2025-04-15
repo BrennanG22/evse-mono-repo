@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 
 import React, { JSX } from "react";
 import APIEntry from "./apiEntry";

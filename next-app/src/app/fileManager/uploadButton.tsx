@@ -1,9 +1,11 @@
 'use client';
 
+import { useConfig } from "@/globalComponents/config/configContext";
 import { useState } from "react";
 
 export default function UploadButton() {
   const [file, setFile] = useState<File | null>(null);
+  const config = useConfig();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -17,7 +19,7 @@ export default function UploadButton() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_MODBUS_SERVER}/service/uploadFile`, {
+    const response = await fetch(`${config.MODBUS_SERVER}/service/uploadFile`, {
       method: "POST",
       body: formData,
     });
