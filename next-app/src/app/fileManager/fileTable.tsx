@@ -1,6 +1,6 @@
 'use client';
 
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import FileEntry from "./fileEntry";
 import UploadButton from "./uploadButton";
 import ConfirmPage from "@/globalComponents/confirmPage";
@@ -13,7 +13,11 @@ function FileTable() {
 
   const config = useConfig();
 
-  getFiles().then((data) => setFileList(createFileEntryList(data)));
+  useEffect(() => {
+    getFiles().then((data) => setFileList(createFileEntryList(data)));
+  }, [])
+
+
 
   function openWarning() {
     setWarningOpen(true);

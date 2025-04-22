@@ -16,9 +16,11 @@ const ParentComp = () => {
   const [currentPower] = useState<number | null>(null);
   let stateSocket: webSocketHelper;
 
+  const config = useConfig();
+
   useEffect(() => {
-    console.assert(process.env.WEBSOCKET_URL, "Missing WEBSOCKET_URL in config");
-    stateSocket = new webSocketHelper(process.env.WEBSOCKET_URL ?? "", newMessageCallback, errorMessageCallback);
+    console.assert(config.WEBSOCKET_URL, "Missing WEBSOCKET_URL in config");
+    stateSocket = new webSocketHelper(config.WEBSOCKET_URL ?? "", newMessageCallback, errorMessageCallback);
     return () => {
       stateSocket.closeSocket();
     }
@@ -38,7 +40,6 @@ const ParentComp = () => {
     
   }
 
-  const config = useConfig();
   return (
     <div>
       <div className="w-full flex justify-center">

@@ -2,6 +2,7 @@
 
 import { JSX, useEffect, useState } from "react";
 import CANEntry from "@/app/canMonitor/canEntry";
+import { useConfig } from "@/globalComponents/config/configContext";
 
 export interface canData {
   time: string;
@@ -17,6 +18,8 @@ const CANTable = () => {
   const [canStatusMessage, setCanStatusMessage] = useState<string>("Status: Offline");
   const [canStatusColour, setCanStatusColour] = useState<string>("bg-red-500");
 
+  const config = useConfig();
+
   useEffect(() => {
     const interval = setInterval(() => {
       updateData();
@@ -24,7 +27,7 @@ const CANTable = () => {
     const statusInterval = setInterval(() => {
       updateStatus();
     }, 10000)
-    return () => {clearInterval(interval); clearInterval(statusInterval)};
+    return () => { clearInterval(interval); clearInterval(statusInterval) };
   }, []);
 
 
@@ -38,13 +41,13 @@ const CANTable = () => {
     });
   }
 
-  async function updateStatus(){
-    const response = await fetch(`${process.env.NEXT_PUBLIC_MODBUS_SERVER}/proxy/api/system/can/can1`);
-    if(!response.ok){
+  async function updateStatus() {
+    const response = await fetch(`${config.MODBUS_SERVER}/proxy/api/system/can/can1`);
+    if (!response.ok) {
       setCanStatusColour("bg-red-500");
       setCanStatusMessage("Status: Offline");
     }
-    else{
+    else {
       setCanStatusColour("bg-green-500");
       setCanStatusMessage("Status: Online");
     }
@@ -62,16 +65,71 @@ const CANTable = () => {
 
   updateStatus();
 
+  async function fetchData(): Promise<canData[]> {
+    const logRegex: RegExp = /\(([\d.]+)\)\s+can1\s+(0x[0-9a-fA-F]+)\s+\[8\]\s+([A-Za-z\d\s]+)/g
+    const CANResponse = await fetch(config.MODBUS_SERVER + "/proxy/api/system/can/can1");
+
+    const data = await CANResponse.text();
+    let match: RegExpExecArray | null;
+    const parsedData: canData[] = [];
+
+    while ((match = logRegex.exec(data)) !== null) {
+      const time = match[1];
+      const canID = match[2];
+      const dataBytes = match[3]
+        .trim()
+        .split(/\s+/)
+        .map(byte => parseInt(byte, 16))
+      parsedData.push({ time, canID, dataBytes });
+    }
+    return parsedData;
+  }
+
+  function startCAN() {
+    fetch(config.MODBUS_SERVER + "/proxy/api/system/can/can1", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    }).catch(error => console.error(error));
+  }
+
+  function stopCAN() {
+    fetch(config.MODBUS_SERVER + "/proxy/api/system/can/can1", {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    }).catch(error => console.error(error));
+  }
+
+  function groupData(data: canData[]) {
+    const groupedData: Map<string, canData[]> = new Map<string, canData[]>();
+    data.reduce((acc: Map<string, canData[]>, obj: canData) => {
+      const key = `${obj.canID}-${obj.dataBytes[1]}`;
+
+      if (!acc.get(key)) {
+        acc.set(key, [])
+      }
+
+      acc.get(key)?.push({ ...obj });
+      return acc;
+    }, groupedData);
+    return groupedData;
+  }
+
   return (
     <>
       <div className="flex items-center mb-4 space-x-3">
         <div className="flex space-x-4">
           <button className="px-4 py-2 bg-green-600 text-white rounded shadow hover:bg-green-700 transition duration-200"
-          onClick={startCAN}>
+            onClick={startCAN}>
             Start CAN
           </button>
           <button className="px-4 py-2 bg-red-600 text-white rounded shadow hover:bg-red-700 transition duration-200"
-          onClick={stopCAN}>
+            onClick={stopCAN}>
             Stop CAN
           </button>
         </div>
@@ -100,59 +158,6 @@ const CANTable = () => {
   )
 }
 
-async function fetchData(): Promise<canData[]> {
-  const logRegex: RegExp = /\(([\d.]+)\)\s+can1\s+(0x[0-9a-fA-F]+)\s+\[8\]\s+([A-Za-z\d\s]+)/g
-  const CANResponse = await fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/proxy/api/system/can/can1");
 
-  const data = await CANResponse.text();
-  let match: RegExpExecArray | null;
-  const parsedData: canData[] = [];
-
-  while ((match = logRegex.exec(data)) !== null) {
-    const time = match[1];
-    const canID = match[2];
-    const dataBytes = match[3]
-      .trim()
-      .split(/\s+/)
-      .map(byte => parseInt(byte, 16))
-    parsedData.push({ time, canID, dataBytes });
-  }
-  return parsedData;
-}
-
-  function startCAN(){
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/proxy/api/system/can/can1", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-    }).catch(error => console.error(error));
-  }
-
-  function stopCAN(){
-    fetch(process.env.NEXT_PUBLIC_MODBUS_SERVER + "/proxy/api/system/can/can1", {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-    }).catch(error => console.error(error));
-  }
-
-function groupData(data: canData[]) {
-  const groupedData: Map<string, canData[]> = new Map<string, canData[]>();
-  data.reduce((acc: Map<string, canData[]>, obj: canData) => {
-    const key = `${obj.canID}-${obj.dataBytes[1]}`;
-
-    if (!acc.get(key)) {
-      acc.set(key, [])
-    }
-
-    acc.get(key)?.push({ ...obj });
-    return acc;
-  }, groupedData);
-  return groupedData;
-}
 
 export default CANTable;
