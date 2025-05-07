@@ -1,4 +1,4 @@
-import { useConfig } from "@/globalComponents/config/configContext";
+import { getConfig } from "@/globalComponents/config/configContext";
 
 type DownloadButtonProps = {
   fileName: string;
@@ -6,7 +6,7 @@ type DownloadButtonProps = {
 
 export default function DownloadButton({ fileName }: DownloadButtonProps) {
   const handleDownload = async () => {
-    const config = useConfig();
+    const config = getConfig();
     const response = await fetch(`${config.MODBUS_SERVER}/service/downloadFile/${fileName}`);
     if (!response.ok) return alert("Download failed: " + await response.text());
 

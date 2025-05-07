@@ -2,7 +2,7 @@
 
 import { JSX, useEffect, useState } from "react";
 import CANEntry from "@/app/canMonitor/canEntry";
-import { useConfig } from "@/globalComponents/config/configContext";
+import { getConfig } from "@/globalComponents/config/configContext";
 
 export interface canData {
   time: string;
@@ -18,7 +18,7 @@ const CANTable = () => {
   const [canStatusMessage, setCanStatusMessage] = useState<string>("Status: Offline");
   const [canStatusColour, setCanStatusColour] = useState<string>("bg-red-500");
 
-  const config = useConfig();
+  const config = getConfig();
 
   useEffect(() => {
     const interval = setInterval(() => {

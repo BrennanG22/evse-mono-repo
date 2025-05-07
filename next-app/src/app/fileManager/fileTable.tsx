@@ -4,14 +4,14 @@ import { JSX, useEffect, useState } from "react";
 import FileEntry from "./fileEntry";
 import UploadButton from "./uploadButton";
 import ConfirmPage from "@/globalComponents/confirmPage";
-import { useConfig } from "@/globalComponents/config/configContext";
+import { getConfig } from "@/globalComponents/config/configContext";
 
 
 function FileTable() {
   const [fileList, setFileList] = useState<JSX.Element[]>([]);
   const [warningOpen, setWarningOpen] = useState<boolean>(false);
 
-  const config = useConfig();
+  const config = getConfig();
 
   useEffect(() => {
     getFiles().then((data) => setFileList(createFileEntryList(data)));

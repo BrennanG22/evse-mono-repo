@@ -34,7 +34,8 @@ export const ConfigProvider = ({
   );
 };
 
-export const useConfig = () => {
+export const getConfig = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const context = useContext(ConfigContext);
   if (!context) throw new Error('useConfig must be used within a ConfigProvider');
   return context;

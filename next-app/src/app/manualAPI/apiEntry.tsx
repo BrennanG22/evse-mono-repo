@@ -38,9 +38,15 @@ const APIEntry: React.FC<apiEntryProps> = ({ data }) => {
 
   async function fetchAPI() {
     try {
-      const res = await fetch(data.endpoint, {
-        method: data.method
-      });
+      const res = (data.method === 'GET') ?
+        await fetch(data.endpoint, {
+          method: data.method
+        }) :
+        await fetch(data.endpoint, {
+          method: data.method,
+          body: bodyText
+        });
+
       if (res.ok) {
         setResponse(await res.text());
       }

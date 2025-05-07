@@ -1,8 +1,4 @@
-{"level":30,"time":1744752335230,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
-{"level":30,"time":1744752335263,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"Modbus server listening on port 2000"}
-{"level":30,"time":1744752356314,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"WebSocket error, retrying (1/2)"}
-{"level":30,"time":1744752356316,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"WebSocket closed unexpectedly"}
-{"level":30,"time":1744752357317,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
-{"level":30,"time":1744752378365,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"WebSocket error, retrying (2/2)"}
-{"level":30,"time":1744752378366,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"WebSocket closed unexpectedly"}
-{"level":50,"time":1744752379367,"pid":9012,"hostname":"DESKTOP-IM51DSP","msg":"WebSocket failed after 2 retries"}
+{"level":30,"time":1745613141061,"pid":29292,"hostname":"LAPTOP-6J25PHEJ","msg":"Trying WebSocket Connection at: ws://10.20.27.100/api/outlets/ccs/statestream"}
+{"level":30,"time":1745613141141,"pid":29292,"hostname":"LAPTOP-6J25PHEJ","msg":"Modbus server listening on port 2000"}
+{"level":30,"time":1745613141152,"pid":29292,"hostname":"LAPTOP-6J25PHEJ","msg":"WebSocket Connected"}
+{"level":30,"time":1745613475652,"pid":29292,"hostname":"LAPTOP-6J25PHEJ","msg":"WebSocket closed unexpectedly"}

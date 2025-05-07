@@ -2,7 +2,7 @@
 
 import { JSX, useEffect, useState } from "react";
 import RuleBar from "./ruleBar";
-import { useConfig } from "@/globalComponents/config/configContext";
+import { getConfig } from "@/globalComponents/config/configContext";
 
 export interface ruleData {
   id: number;
@@ -24,7 +24,7 @@ const RuleTable = () => {
     return typeof window !== "undefined" ? JSON.parse(localStorage.getItem("rules") || "[]") : []
   });
 
-  const config = useConfig();
+  const config = getConfig();
 
   //Connection details
   const [ipAddress, setIpAddress] = useState<string>(() => { return typeof window !== "undefined" ? localStorage.getItem("ip") || "" : "" });

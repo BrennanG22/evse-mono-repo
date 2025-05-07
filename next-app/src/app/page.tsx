@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import MonitorContainer from "./monitorContainer";
 import StatsBox from "./statsBox";
 import webSocketHelper from "./webSocketHelper";
-import { useConfig } from "@/globalComponents/config/configContext";
+import { getConfig } from "@/globalComponents/config/configContext";
 
 const ParentComp = () => {
 
@@ -16,7 +16,7 @@ const ParentComp = () => {
   const [currentPower] = useState<number | null>(null);
   let stateSocket: webSocketHelper;
 
-  const config = useConfig();
+  const config = getConfig();
 
   useEffect(() => {
     console.assert(config.WEBSOCKET_URL, "Missing WEBSOCKET_URL in config");
@@ -31,9 +31,9 @@ const ParentComp = () => {
 
     setCurrentState(message.phs);
     setCurrent(message.pc);
-    setVoltage(voltage == null ? 0 : voltage + 1);
+    setVoltage(message.pv);
     setPowerLimit(message.pLimit);
-    //Set current power;
+    setCurrent(message.pp);
   }
 
   function errorMessageCallback() {
@@ -50,7 +50,6 @@ const ParentComp = () => {
           <StatsBox current={current} voltage={voltage} powerLimit={powerLimit} currentPower={currentPower} />
         </MonitorContainer>
       </div>
-      {config.API_CONFIG_PATH}
     </div>
   )
 }

@@ -1,6 +1,4 @@
-import { redirect } from "next/navigation";
 import APIContainer from "./apiContainer";
-import readConfig from "@/globalComponents/config/configManager";
 
 export const dynamic = "force-dynamic";
 

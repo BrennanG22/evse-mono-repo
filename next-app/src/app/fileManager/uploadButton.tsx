@@ -1,11 +1,11 @@
 'use client';
 
-import { useConfig } from "@/globalComponents/config/configContext";
+import { getConfig } from "@/globalComponents/config/configContext";
 import { useState } from "react";
 
 export default function UploadButton() {
   const [file, setFile] = useState<File | null>(null);
-  const config = useConfig();
+  const config = getConfig();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {

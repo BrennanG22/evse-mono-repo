@@ -2,6 +2,6 @@
   "MODBUS_SERVER": "http://localhost:2000",
   "SECC_SERVER": "http://10.20.27.100",
   "WEBSOCKET_URL": "ws://10.20.27.100/api/outlets/ccs/statestream",
-  "CONFIG_PATH": "C:/Users/jbrgi/Code/evse-mono-repo/config",
-  "API_CONFIG_PATH": "C:/Users/jbrgi/Code/evse-mono-repo/config/apiConfig.json"
+  "CONFIG_PATH": "/app/config",
+  "API_CONFIG_PATH": "/app/config/apiConfig.json"
 }

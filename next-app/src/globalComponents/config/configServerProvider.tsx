@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { ConfigProvider, AppConfig, AppConfigSchema } from '@/globalComponents/config/configContext';
+import { ConfigProvider, AppConfig } from '@/globalComponents/config/configContext';
 import readConfig from '@/globalComponents/config/configManager';
 import { redirect } from 'next/navigation';
 
